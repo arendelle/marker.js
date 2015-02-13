@@ -6,14 +6,24 @@
 
 
 //
+// INFO
+//
+
+var version = '0.004';
+
+
+
+//
 // TAGS
 //
 
 var start        = '<span style="color: #';
+var bold_start   = '<span style="font-weight: bold; color: #';
 var middle       = ';">';
 var end          = '</span>';
-var start_header = '<!-- Marker.js : Start --><pre><code>';
-var end_header   = '</code></pre><!-- Marker.js : End -->';
+var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>\n';
+var end_header   = '\n</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
+
 
 
 //
@@ -29,7 +39,20 @@ var function_color = "8C007F";
 
 
 
-// Highlight
+///
+/// MARKER
+///
+
+function mark (text) {
+
+	return start_header + highlight ( text ) + end_header ;
+
+}
+
+///
+/// Returns highlighted 'text' value
+///
+
 function highlight (text) {
 
 	var result   = '';
@@ -39,6 +62,10 @@ function highlight (text) {
 		var reading_char = text[i];
 
 		switch (reading_char) {
+
+			//
+			// GRAMMARS
+			//
 
 			case '[':
 			case ']':
@@ -53,6 +80,12 @@ function highlight (text) {
 				result += start + loop_color + middle + reading_char + end;
 				break;
 
+
+
+			//
+			// NUMERICS
+			//
+
 			case '0':
 			case '1':
 			case '2':
@@ -65,7 +98,190 @@ function highlight (text) {
 			case '9':
 			case '.':
 
-				result += start + number_color + middle + reading_char + end;
+				var number_string   = '';
+				var while_control_1 = true;
+
+				number_string += reading_char; i++;
+
+				while ( i < text.length && while_control_1 ) {
+
+					if ( /[0-9\.]/g.test( text[ i ] ) ) {
+
+						number_string += text[ i ];
+
+					} else {
+
+						while_control_1 = false;
+						i--;
+						break;
+
+					}
+
+					i++;
+				}
+
+				result += start + number_color + middle + number_string + end;
+				break;
+
+
+
+			//
+			// { SPACE, SOURCE, STORED SPACE, FUNCTIONS 
+			//
+
+			case '@':
+			case '#':
+			case '!':
+			case '$':
+
+				var data_string      = '';
+				var while_control_2  = true;
+
+				data_string += reading_char; i++;
+				
+				while ( i < text.length && while_control_2 ) {
+
+					if ( /[a-zA-Z0-9 \\.]/g.test( text[ i ] ) ) {
+
+						data_string += text[ i ];
+
+					} else {
+
+						while_control_2 = false;
+						i--;
+						break;
+
+					}
+
+					i++;
+				}
+
+				result += start + data_color + middle + data_string + end;
+				break;
+
+
+
+			//
+			// STRINGS
+			//
+
+			case "'":
+			case '"':
+
+				var string_string   = '';
+				var string_sign     = reading_char;
+				var while_control_3 = true; 
+
+				i++;
+
+				//
+				// STRING READER
+				//
+
+				while ( i < text.length && while_control_3 ) {
+
+					switch ( text[ i ] ) {
+
+						case string_sign :
+							result += start + string_color + middle + string_sign + string_string + string_sign + end;
+							while_control_3 = false; i--;
+							break;
+
+						//
+						// SCAPE SEQUANCE READER
+						// 
+
+						case '\\':
+							i++;
+
+							switch (text[ i ]) {
+
+								//
+								// STRING REPLACER READER
+								//
+
+								case '(':
+
+									var while_control_4        = true;
+									var string_replacer_string = '';
+									var indent_level		   = 0;
+
+									
+									while ( i < text.length && while_control_4 ) {
+
+										i++;
+
+										if ( text[ i ] == '(' ) {
+
+											indent_level++;
+
+										} else if ( text[ i ] == ')' ) {
+
+											if ( indent_level == 0 ) {
+
+												while_control_4 = false; i++;
+												string_string += end + "\\(" + highlight ( string_replacer_string ) + ")" + start + string_color + middle;
+
+											}
+
+											indent_level--;
+
+										} else {
+
+											string_replacer_string += text[ i ];
+
+										}
+									}
+
+									break;
+
+									//
+									// DONE: STRING REPLACER READER
+									//
+
+								default:
+									string_string += start + data_color + middle + '\\' + text[ i ] + end;
+									i++;
+
+							}
+
+							i--;
+							break;
+
+							//
+							// DONE: SCAPE SEQUANCE READER
+							//
+
+						default:
+							string_string += text[ i ];
+					}
+
+					i++;
+				}
+
+				break;
+
+				//
+				// DONE: STRING READER
+				//
+
+
+
+
+			//
+			// WHITESPACE HANDLERS
+			//
+
+			case '\n':
+				result += "<br>";
+				break;
+
+			case ' ':
+				result += "&nbsp;";
+				break;
+
+			case '\t':
+				result += "&nbsp;&nbsp;&nbsp;";
 				break;
 
 			default:
@@ -74,18 +290,9 @@ function highlight (text) {
 
 	}
 
-	return start_header + result + end_header;
+	return result ;
 }
 
 //
 // DONE
 //
-
-
-
-
-
-
-
-
-
