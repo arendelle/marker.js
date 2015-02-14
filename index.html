@@ -12,6 +12,21 @@
     <meta name="description" content="Marker highlights Arendelle codes using marker.js" />
     <meta http-equiv="content-language" content="en" />
 
+    <style type="text/css">
+    	::-webkit-scrollbar {  
+    		width: 6px;  
+		}  
+		::-webkit-scrollbar-track {  
+    		background-color: #fff;  
+		}  
+		::-webkit-scrollbar-thumb {  
+    		background-color: #BD00AD;  
+		}  
+		::-webkit-scrollbar-thumb:hover {  
+    		background-color: #ccc;  
+		}  
+    </style>
+
 	<title>Maker</title>
 
 	<!-- JavaScript Libraries -->
@@ -66,13 +81,13 @@
 	<div style="float:left; width:65%; background-color:#fff; height: 100vh; font-family:monospace;">
 
 		<!-- Preview -->
-		<div style="height:70vh; overflow:scroll; border: 1px solid #ccc; border-top: none; border-right: none; border-left: none;">
+		<div style="height:70vh; overflow:scroll; border: 1px solid #ccc; border-top: none; border-right: none; border-left: none; overflow-x: hidden;">
 			<p id="preView" style="font-size:1.2rem; font-family: Menlo;"></p>
 		</div>
 
 		<!-- Sourse Code -->
-		<div style="height:28vh; overflow:scroll;"> 
-			<pre><code id="codeView" style="font-size:0.6rem; color: #6200A8; text-align: justify; text-justify: inter-word; overflow-x: hidden;"></code></pre>
+		<div style="height:28vh; overflow:scroll; overflow-x: hidden; overflow-y: hidden;"> 
+			<pre><code id="codeView" style="font-size:0.6rem; color: #6200A8; text-align: justify; text-justify: inter-word;"></code></pre>
 		</div>		
 
 	</div>
