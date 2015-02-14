@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 
-<!-- Marker.js - Copyright 2015 Pouya Kary -->
+<!-- Marker.js Interface. Copyright 2015 Pouya Kary -->
+<!-- To be avialable as http://marker.arendelle.org -->
 
 <html>
 <head>
+	<meta charset="UTF-8">
+
+	<!-- SEO -->
+    <meta name="keywords" content="Marker, Highlighting Arendelle, Arendelle Highlighter, Highlighter, Arendelle, Arendelle Language, Pouya Kary, Micha Hanselmann" />
+    <meta name="description" content="Marker highlights Arendelle codes using marker.js" />
+    <meta http-equiv="content-language" content="en" />
+
 	<title>Maker</title>
+
+	<!-- JavaScript Libraries -->
  	<script src="./jquery-1.11.2.min.js"></script>
  	<script type="text/javascript" src="./marker.js"></script>
+
+ 	<!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://web.arendelle.org/public/apple-touch-icon-precomposed.png">
+    <link rel="shortcut icon" href="http://web.arendelle.org/public/favicon.ico">
 
  	<script type="text/javascript">
  		function load () {
@@ -20,25 +34,30 @@
 <body style="margin:0;" onload="load()">
 
 	<!-- Pad -->
-	<div style="float:left; width:35%; background-color: #fff; height:100vh;">
+	<div style="float:left; width:35%; background-color: #fff; height:95vh;">
 		<div style="margin: 2%; height:98%; border: 1px solid #ccc; border-top: none; border-bottom: none; border-left: none;">
 
 			<!-- Input -->
-			<br>
-			<textarea id="pad" style="width:96%; height:86%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #D60073; outline: none;  outline-color: transparent; outline-style: none;">//
+			<h2 style="font-family: Helvetica; color: #6200A8;">Marker</h2>
+			<textarea id="pad" style="width:96%; height:80%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #BD00AD; outline: none;  outline-color: transparent; outline-style: none;">//
 // Marker: Highlights Arendelle for a living!
-// Highlight via: http://marker.arendelle.org
+// http://marker.arendelle.org
 //
 
-   'Screen size: i=\( #i ), j=\( #j )'
+   "String with replacer example: \( @space / 23 )"
 
-   [ 10 , pr ]
+// A bit of code example
+   ( fib , 1; 1 ) [ 198 ,
 
+      ( fib[ @fib? ] ,
+
+          @fib[ @fib? - 1 ] + @fib[ @fib? - 2 ]
+
+   ) ]
 
 // DONE</textarea>
 
-    		<p style="font-family:monospace; color: #BD00AD;">Marker: Online Arendelle highlighter<br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>.</p>
-
+    		<p style="font-family:monospace; color: #BD00AD;"><b>Marker</b>: <a style="color:#6200A8; text-decoration:none;" href="http://github.com/arendelle/marker.js">GitHub</a> &middot; <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org">Arendelle Project</a> &middot;  <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org/legal/marker-js/">Legal</a><br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>.</p>
 		</div>
 	</div>
 

@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '0.005';
+var version = '0.006';
 
 
 
@@ -72,15 +72,60 @@ function highlight (text) {
 
 			case '[':
 			case ']':
-			case '(':
 			case ')':
 			case '<':
 			case '>':
 			case '{':
 			case '}':
+			case ';':
 			case ',':
 
 				result += start + loop_color + middle + reading_char + end;
+				break;
+
+
+
+
+			//
+			// ( space name highlighter , 0 )
+			//
+
+			case '(':
+
+				result += start + loop_color + middle + reading_char + end;
+
+				var space_init_string = '';
+				var while_control_6   = true;
+				
+				i++;
+
+				while ( i < text.length && while_control_6 ) {
+
+					if ( text[ i ] == ')' || text[ i ] == ',' ) {
+
+						if ( /[a-zA-Z0-9]/g.test( space_init_string ) ) {
+
+							result += start + data_color + middle + space_init_string + end;
+							
+						} else {
+
+							result += start + data_color + middle + "12" + end;
+
+						}
+
+						result += start + loop_color + middle + text[ i ] + end;
+						while_control_6 = false;
+
+					} else {
+
+						space_init_string += text[ i ];
+
+					}
+
+					i++;
+				}
+				
+				i--;
 				break;
 
 
@@ -146,7 +191,7 @@ function highlight (text) {
 				
 				while ( i < text.length && while_control_2 ) {
 
-					if ( /[a-zA-Z0-9 \\.]/g.test( text[ i ] ) ) {
+					if ( /[a-zA-Z0-9\?\. 3]/g.test( text[ i ] ) ) {
 
 						data_string += text[ i ];
 
@@ -176,7 +221,7 @@ function highlight (text) {
 
 				var comment_string = '';
 				
-				if ( i < text.length ) {
+				if ( i < text.length - 1 ) {
 
 					i++;
 
@@ -223,7 +268,7 @@ function highlight (text) {
 						result += start + comment_color + middle + comment_string + end;
 
 					} else {
-						result + '/' + text[ i ];
+						result += '/' + text[ i ];
 					}
 
 				} else {
