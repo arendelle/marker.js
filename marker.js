@@ -1,6 +1,6 @@
 
 //
-// Marker.js, Port of the original Cliff.Marker
+// Marker.js, Port of the original Cliff.Highlights
 // Copyright 2015 Pouya Kary <k@arendelle.org> 
 //
 
@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '0.004';
+var version = '0.005';
 
 
 
@@ -21,8 +21,8 @@ var start        = '<span style="color: #';
 var bold_start   = '<span style="font-weight: bold; color: #';
 var middle       = ';">';
 var end          = '</span>';
-var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>\n';
-var end_header   = '\n</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
+var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>';
+var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
 
 
 
@@ -55,6 +55,8 @@ function mark (text) {
 
 function highlight (text) {
 
+	text = text.replace(/\</g,'&lt;').replace(/\>/g,'&gt;');
+
 	var result   = '';
 
 	for ( var i = 0; i < text.length; i++ ) {
@@ -62,6 +64,7 @@ function highlight (text) {
 		var reading_char = text[i];
 
 		switch (reading_char) {
+
 
 			//
 			// GRAMMARS
@@ -79,6 +82,7 @@ function highlight (text) {
 
 				result += start + loop_color + middle + reading_char + end;
 				break;
+
 
 
 
@@ -125,6 +129,7 @@ function highlight (text) {
 
 
 
+
 			//
 			// { SPACE, SOURCE, STORED SPACE, FUNCTIONS 
 			//
@@ -158,6 +163,75 @@ function highlight (text) {
 
 				result += start + data_color + middle + data_string + end;
 				break;
+
+
+
+
+			//
+			// COMMENTS
+			//
+
+			case '/':
+
+
+				var comment_string = '';
+				
+				if ( i < text.length ) {
+
+					i++;
+
+					if ( text[ i ] == '/' ) {
+
+						comment_string = '//'; i++;
+
+						while ( i < text.length && text[ i ] != '\n' ) {
+
+							comment_string += text[ i ];
+							i++;
+
+						}
+
+						result += start + comment_color + middle + comment_string + end;
+						i--;
+
+					} else if ( text[ i ] == '*' ) {
+
+						i++; comment_string  = '/*'; 
+						var  while_control_5 = true;
+
+						while ( i < text.length && while_control_5 ) {
+
+							if ( text[ i ] == '*' && i < text.length -1 ) {
+
+								i++;
+								if ( text[ i ] == '/' ) {
+
+									comment_string += '*/';
+									while_control_5 = false;
+
+								} else {
+									comment_string += '*' + text[i];
+									i++;
+								}						
+
+							} else {
+								comment_string += text[ i ];
+								i++;
+							}
+						}
+
+						result += start + comment_color + middle + comment_string + end;
+
+					} else {
+						result + '/' + text[ i ];
+					}
+
+				} else {
+					result += '/';
+				}
+
+				break;
+
 
 
 

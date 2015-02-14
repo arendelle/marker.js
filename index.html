@@ -7,29 +7,48 @@
 	<title>Maker</title>
  	<script src="./jquery-1.11.2.min.js"></script>
  	<script type="text/javascript" src="./marker.js"></script>
+
+ 	<script type="text/javascript">
+ 		function load () {
+ 			var resultCode = mark($("#pad").val());
+			document.getElementById("preView").innerHTML = mark($("#pad").val());
+			document.getElementById("codeView").innerHTML = resultCode.replace(/\</g,'&lt;').replace(/\>/g,'&gt;');
+		}
+ 	</script>
 </head>
 
-<body style="margin:0;">
+<body style="margin:0;" onload="load()">
 
 	<!-- Pad -->
-	<div style="float:left; width:30%; background-color: #fff; height:100vh;">
+	<div style="float:left; width:35%; background-color: #fff; height:100vh;">
 		<div style="margin: 2%; height:98%; border: 1px solid #ccc; border-top: none; border-bottom: none; border-left: none;">
 
 			<!-- Input -->
-			<textarea id="pad" style="width:96%; height:90%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #D60073; outline: none;  outline-color: transparent; outline-style: none;">// You're code goes here</textarea>
+			<br>
+			<textarea id="pad" style="width:96%; height:86%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #D60073; outline: none;  outline-color: transparent; outline-style: none;">//
+// Marker: Highlights Arendelle for a living!
+// Highlight via: http://marker.arendelle.org
+//
 
-    		<p style="font-family:monospace;">Copyright 2015 <a href="http://kary.us/" style="color:#000; text-decoration:none;">Pouya Kary</a>.</p>
+   'Screen size: i=\( #i ), j=\( #j )'
+
+   [ 10 , pr ]
+
+
+// DONE</textarea>
+
+    		<p style="font-family:monospace; color: #BD00AD;">Marker: Online Arendelle highlighter<br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>.</p>
 
 		</div>
 	</div>
 
 
 	<!-- Results -->
-	<div style="float:left; width:70%; background-color:#fff; height: 100vh; font-family:monospace;">
+	<div style="float:left; width:65%; background-color:#fff; height: 100vh; font-family:monospace;">
 
 		<!-- Preview -->
 		<div style="height:70vh; overflow:scroll; border: 1px solid #ccc; border-top: none; border-right: none; border-left: none;">
-			<p id="preView"></p>
+			<p id="preView" style="font-size:1.2rem; font-family: Menlo;"></p>
 		</div>
 
 		<!-- Sourse Code -->
