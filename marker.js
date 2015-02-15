@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '1.02';
+var version = '1.03';
 
 
 //
@@ -119,6 +119,7 @@ function highlight (text) {
 
 						result += start + data_color + middle + space_init_string + end;
 						while_control_6 = false;
+						i--;
 
 					}
 
