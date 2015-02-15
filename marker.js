@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '1.04';
+var version = '1.05';
 
 
 //
@@ -52,7 +52,7 @@ function markerInitHighlightingOnLoad () {
 
 function highlight (text) {
 
-	var result   = '';
+	var result = '';
 
 	for ( var i = 0; i < text.length; i++ ) {
 
@@ -408,8 +408,6 @@ function highlight (text) {
 
 	}
 
-	console.log(result);
-	
 	return result ;
 }
 

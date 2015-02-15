@@ -2,7 +2,7 @@
 
 # Marker.js
 
-A JavaScript library for highlighting Arendelle. It's a port of [Cliff.Highlighter](https://github.com/arendelle/marker) and has an online website studio where you can write Arendelle codes and get an immediate result as native HTML / CSS.<br><br>
+A pure super-lightweight framework-independent JavaScript library for highlighting Arendelle. It's a port of [Cliff.Highlighter](https://github.com/arendelle/marker) and has an online website studio where you can write Arendelle codes and get an immediate result as native HTML / CSS.<br><br>
 
 ## Using it in your website
 Use this in your header:
