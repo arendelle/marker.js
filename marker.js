@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '1.00';
+var version = '1.02';
 
 
 //
@@ -70,14 +70,27 @@ function highlight (text) {
 			case '[':
 			case ']':
 			case ')':
-			case '<':
-			case '>':
 			case '{':
 			case '}':
 			case ';':
 			case ',':
 
 				result += start + loop_color + middle + reading_char + end;
+				break;
+
+
+
+
+			//
+			// SPECIAL CHARACTERS
+			//
+
+			case '<':
+				result += start + loop_color + middle + "&lt;" + end;
+				break;
+
+			case '>':
+				result += start + loop_color + middle + "&gt;" + end;
 				break;
 
 
@@ -98,24 +111,14 @@ function highlight (text) {
 
 				while ( i < text.length && while_control_6 ) {
 
-					if ( text[ i ] == ')' || text[ i ] == ',' || text[ i ] == '[' ) {
+					if ( /[a-z0-9 ]/i.test( text[ i ] ) ) {
 
-						if ( /^[\.a-z0-9 ]+$/i.test( space_init_string ) ) {
-
-							result += start + data_color + middle + space_init_string + end;
-							
-						} else {
-
-							result += highlight( space_init_string );
-
-						}
-
-						result += start + loop_color + middle + text[ i ] + end;
-						while_control_6 = false;
+						space_init_string += text[ i ];
 
 					} else {
 
-						space_init_string += text[ i ];
+						result += start + data_color + middle + space_init_string + end;
+						while_control_6 = false;
 
 					}
 
@@ -188,7 +191,7 @@ function highlight (text) {
 				
 				while ( i < text.length && while_control_2 ) {
 
-					if ( /[a-zA-Z0-9\?\. 3]/g.test( text[ i ] ) ) {
+					if ( /[a-zA-Z0-9\?\. ]/g.test( text[ i ] ) ) {
 
 						data_string += text[ i ];
 
