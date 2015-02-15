@@ -20,8 +20,6 @@ var start        = '<span style="color: #';
 var bold_start   = '<span style="font-weight: bold; color: #';
 var middle       = ';">';
 var end          = '</span>';
-var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>';
-var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
 
 
 //
@@ -37,25 +35,14 @@ var function_color = "8C007F";
 
 
 ///
-/// initHighlightingOnLoad
+/// markerInitHighlightingOnLoad
 ///
 
-function initHighlightingOnLoad () {
+function markerInitHighlightingOnLoad () {
 	var highlight_elements = document.getElementsByClassName('arendelle');
 	for (var i = 0; i < highlight_elements.length; ++i) {
     	highlight_elements[i].innerHTML = highlight(highlight_elements[i].innerHTML);
 	}
-}
-
-
-///
-/// MARKER
-///
-
-function mark (text) {
-
-	return start_header + highlight ( text ) + end_header ;
-
 }
 
 

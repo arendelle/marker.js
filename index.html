@@ -43,6 +43,12 @@
 			document.getElementById("preView").innerHTML = resultCode;
 			document.getElementById("codeView").innerHTML = resultCode.replace(/\</g,'&lt;').replace(/\>/g,'&gt;');
 		}
+
+		function mark (text) {
+			var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>';
+			var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
+			return start_header + highlight ( text ) + end_header ;
+		}
  	</script>
 </head>
 
