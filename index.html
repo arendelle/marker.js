@@ -30,7 +30,7 @@
 	<title>Maker</title>
 
 	<!-- JavaScript Libraries -->
- 	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+ 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
  	<script type="text/javascript" src="marker.js"></script>
 
  	<!-- Icons -->
@@ -68,12 +68,13 @@
    "String with replacer example: \( @space / 23 )"
 
 // A bit of code example
-   ( fib , 1; 1 ) [ 198 ,
 
-      ( fib[ @fib? ] ,
+   ( fibonacci , 1; 1 ) [ 198 ,
 
-          @fib[ @fib? - 1 ] + @fib[ @fib? - 2 ]
+      ( fibonacci[ @fibonacci? ] ,
 
+          @fibonacci[ @fibonacci? - 1 ] +
+          @fibonacci[ @fibonacci? - 2 ]
    ) ]
 
 // DONE</textarea>

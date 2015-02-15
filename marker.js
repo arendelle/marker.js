@@ -9,7 +9,7 @@
 // INFO
 //
 
-var version = '1.03';
+var version = '1.04';
 
 
 //
@@ -51,8 +51,6 @@ function markerInitHighlightingOnLoad () {
 ///
 
 function highlight (text) {
-
-	text = text.replace(/\</g,'&lt;').replace(/\>/g,'&gt;');
 
 	var result   = '';
 
@@ -410,6 +408,8 @@ function highlight (text) {
 
 	}
 
+	console.log(result);
+	
 	return result ;
 }
 
