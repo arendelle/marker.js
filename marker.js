@@ -9,8 +9,7 @@
 // INFO
 //
 
-var version = '0.007';
-
+var version = '1.00';
 
 
 //
@@ -25,7 +24,6 @@ var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre>
 var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
 
 
-
 //
 // COLORS
 //
@@ -38,6 +36,17 @@ var number_color   = "6200A8";
 var function_color = "8C007F";
 
 
+///
+/// initHighlightingOnLoad
+///
+
+function initHighlightingOnLoad () {
+	var highlight_elements = document.getElementsByClassName('arendelle');
+	for (var i = 0; i < highlight_elements.length; ++i) {
+    	highlight_elements[i].innerHTML = highlight(highlight_elements[i].innerHTML);
+	}
+}
+
 
 ///
 /// MARKER
@@ -48,6 +57,7 @@ function mark (text) {
 	return start_header + highlight ( text ) + end_header ;
 
 }
+
 
 ///
 /// Returns highlighted 'text' value
@@ -412,6 +422,6 @@ function highlight (text) {
 	return result ;
 }
 
-//
-// DONE
-//
+///
+/// DONE
+///
