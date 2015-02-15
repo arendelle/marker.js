@@ -11,13 +11,33 @@ Use this in your header:
 <script src="http://web.arendelle.org/developer/marker.js"></script>
 ```
 
-And then you can highlight code using the `mark(code)` function like:
+We ask you to use `marker.js` from our website because this way we can keep the file update all over the web as well as delivering you a minified `2.5 KB` file. And then add this line (Which is awesome if you put it in the end of your website)
 
-```JavaScript
-document.getElementById("something").innerHTML = mark ( document.getElementById("something").innerHTML )
+```HTML
+<script type="text/javascript">markerInitHighlightingOnLoad()</script>
 ```
 
-Done!
+And then what ever you want to highlight use class `arendelle` for and they will be simply highlighted:
+
+```HTML
+<pre><code class="arendelle">[ 10 , pr ]</code></pre>
+```
+
+This system is designed to be very much like [highlight.js](https://highlightjs.org) 
+
+<br><br>
+
+## A bit Pro
+
+If you want to highlight yourself you can use `highlight( code )` function. You can use this codes like this:
+
+```JavaScript
+document.getElementById( "something" ).innerHTML = highlight ( document.getElementById("something").innerHTML )
+```
+
+Done! You've mastered it all!
+
+<br><br>
 
 ## License
 
