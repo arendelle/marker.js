@@ -103,7 +103,7 @@ function highlight (text) {
 
 					if ( text[ i ] == ')' || text[ i ] == ',' || text[ i ] == '[' ) {
 
-						if ( /^[a-zA-Z0-9 ]+$/.test( space_init_string ) ) {
+						if ( /^[\.a-z0-9 ]+$/i.test( space_init_string ) ) {
 
 							result += start + data_color + middle + space_init_string + end;
 							
