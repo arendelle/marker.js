@@ -9,28 +9,7 @@
 // INFO
 //
 
-var version = '1.06';
-
-
-//
-// TAGS
-//
-
-var start        = '<span style="color: #';
-var middle       = ';">';
-var end          = '</span>';
-
-
-//
-// COLORS
-//
-
-var loop_color     = "D60073";
-var data_color     = "4E00FC";
-var comment_color  = "A0A0A0";
-var string_color   = "BD00AD"; 
-var number_color   = "6200A8";
-var function_color = "8C007F";
+var marker_version = '1.07';
 
 
 ///
@@ -50,6 +29,28 @@ function markerInitHighlightingOnLoad () {
 ///
 
 function highlight (text) {
+
+	//
+	// COLORS
+	//
+
+	var loop_color     = "D60073";
+	var data_color     = "4E00FC";
+	var comment_color  = "A0A0A0";
+	var string_color   = "BD00AD"; 
+	var number_color   = "6200A8";
+	var function_color = "8C007F";
+
+
+	//
+	// TAGS
+	//
+
+
+	var start   = '<span style="color: #';
+	var middle  = ';">';
+	var end     = '</span>';
+
 
 	text = text.replace('&lt;','<').replace('&gt;','>');
 
@@ -110,19 +111,27 @@ function highlight (text) {
 
 				while ( i < text.length && while_control_6 ) {
 
-					if ( /[a-z0-9 ]/i.test( text[ i ] ) ) {
+					if ( /[\.a-z0-9 ]/i.test( text[ i ] ) ) {
 
 						space_init_string += text[ i ];
 
 					} else {
 
-						result += start + data_color + middle + space_init_string + end;
 						while_control_6 = false;
 						i--;
 
 					}
 
 					i++;
+				}
+
+				if ( /^ *[a-z][\.a-z0-9 ]*$/i.test(space_init_string) ) {
+
+					result += start + data_color + middle + space_init_string + end;
+
+				} else {
+
+					result += highlight (space_init_string);
 				}
 				
 				i--;
