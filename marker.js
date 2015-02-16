@@ -17,7 +17,6 @@ var version = '1.06';
 //
 
 var start        = '<span style="color: #';
-var bold_start   = '<span style="font-weight: bold; color: #';
 var middle       = ';">';
 var end          = '</span>';
 
