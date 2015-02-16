@@ -1,15 +1,15 @@
 
-//
-// Marker.js, Port of the original Cliff.Highlights
-// Copyright 2015 Pouya Kary <k@arendelle.org> 
-//
+/* ------------------------------------------------ *
+ * Marker.js: Port of the original Cliff.Highlights *
+ *   Copyright 2015 Pouya Kary. <k@arendelle.org>   *
+ * ------------------------------------------------ */
 
 
-//
-// INFO
-//
+///
+/// INFO
+///
 
-var marker_version = '1.07';
+var marker_version = '1.08';
 
 
 ///
@@ -17,9 +17,13 @@ var marker_version = '1.07';
 ///
 
 function markerInitHighlightingOnLoad () {
-	var highlight_elements = document.getElementsByClassName('arendelle');
-	for (var i = 0; i < highlight_elements.length; ++i) {
-    	highlight_elements[i].innerHTML = highlight(highlight_elements[i].innerHTML);
+
+	var elements = document.getElementsByClassName('arendelle');
+
+	for ( var i = 0; i < elements.length; i++ ) {
+
+    	elements[i].innerHTML = highlight(elements[i].innerHTML);
+
 	}
 }
 
@@ -42,19 +46,24 @@ function highlight (text) {
 	var function_color = "8C007F";
 
 
+
 	//
 	// TAGS
 	//
-
 
 	var start   = '<span style="color: #';
 	var middle  = ';">';
 	var end     = '</span>';
 
 
+	var result = '';
+
 	text = text.replace('&lt;','<').replace('&gt;','>');
 
-	var result = '';
+
+	//
+	// BODY
+	//
 
 	for ( var i = 0; i < text.length; i++ ) {
 
@@ -163,7 +172,7 @@ function highlight (text) {
 
 				while ( i < text.length && while_control_1 ) {
 
-					if ( /[0-9\.]/g.test( text[ i ] ) ) {
+					if ( /[0-9\.]/.test( text[ i ] ) ) {
 
 						number_string += text[ i ];
 
@@ -200,7 +209,7 @@ function highlight (text) {
 				
 				while ( i < text.length && while_control_2 ) {
 
-					if ( /[a-zA-Z0-9\?\. ]/g.test( text[ i ] ) ) {
+					if ( /[a-z0-9\?\. ]/i.test( text[ i ] ) ) {
 
 						data_string += text[ i ];
 
@@ -234,11 +243,11 @@ function highlight (text) {
 
 					i++;
 
-					if ( text[ i ] == '/' ) {
+					if ( text[ i ] === '/' ) {
 
 						comment_string = '//'; i++;
 
-						while ( i < text.length && text[ i ] != '\n' ) {
+						while ( i < text.length && text[ i ] !== '\n' ) {
 
 							comment_string += text[ i ];
 							i++;
@@ -248,17 +257,17 @@ function highlight (text) {
 						result += start + comment_color + middle + comment_string + end;
 						i--;
 
-					} else if ( text[ i ] == '*' ) {
+					} else if ( text[ i ] === '*' ) {
 
 						i++; comment_string  = '/*'; 
 						var  while_control_5 = true;
 
 						while ( i < text.length && while_control_5 ) {
 
-							if ( text[ i ] == '*' && i < text.length -1 ) {
+							if ( text[ i ] === '*' && i < text.length -1 ) {
 
 								i++;
-								if ( text[ i ] == '/' ) {
+								if ( text[ i ] === '/' ) {
 
 									comment_string += '*/';
 									while_control_5 = false;
@@ -339,13 +348,13 @@ function highlight (text) {
 
 										i++;
 
-										if ( text[ i ] == '(' ) {
+										if ( text[ i ] === '(' ) {
 
 											indent_level++;
 
-										} else if ( text[ i ] == ')' ) {
+										} else if ( text[ i ] === ')' ) {
 
-											if ( indent_level == 0 ) {
+											if ( indent_level === 0 ) {
 
 												while_control_4 = false; i++;
 												string_string += end + "\\(" + highlight ( string_replacer_string ) + ")" + start + string_color + middle;

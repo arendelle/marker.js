@@ -27,10 +27,10 @@
 		}  
     </style>
 
-	<title>Maker</title>
+	<title>Maker Studio</title>
 
 	<!-- JavaScript Libraries -->
- 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+ 	<script src="jquery-1.11.2.min.js"></script>
  	<script type="text/javascript" src="marker.js"></script>
 
  	<!-- Icons -->
@@ -45,29 +45,31 @@
 		}
 
 		function mark (text) {
-			var start_header = '<!-- [+] Marker.js ' + version + ' : Code Block -->\n\n<pre><code>';
-			var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + version + ' : Code Block -->';
+			var start_header = '<!-- [+] Marker.js ' + marker_version + ' : Code Block -->\n\n<pre><code>';
+			var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + marker_version + ' : Code Block -->';
 			return start_header + highlight ( text ) + end_header ;
 		}
  	</script>
 </head>
 
-<body style="margin:0;" onload="load()">
+<body style="margin:0;" onload="load()" onresize="size()" id="body">
 
 	<!-- Pad -->
 	<div style="float:left; width:35%; background-color: #fff; height:95vh;">
 		<div style="margin: 2%; height:98%; border: 1px solid #ccc; border-top: none; border-bottom: none; border-left: none;">
 
+			<img src="logo.png" style="height:40px;">
+
 			<!-- Input -->
-			<h2 style="font-family: Helvetica; color: #6200A8;">Marker</h2>
-			<textarea id="pad" style="width:96%; height:80%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #BD00AD; outline: none;  outline-color: transparent; outline-style: none;">//
-// Marker: Highlights Arendelle for a living!
-// http://marker.arendelle.org
-//
+			<textarea id="pad" style="width:96%; height:87%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #BD00AD; outline: none;  outline-color: transparent; outline-style: none;">/* Marker Studio is an online playground for *
+ * Arendelle's marker.js. So you can see how *
+ * the engine works and what code it creates */
 
-   "String with replacer example: \( @space / 23 )"
+// Simple string example:
 
-// A bit of code example
+   "String interpolation example: \( @space / 23 )"
+
+// Simple code example
 
    ( fibonacci , 1; 1 ) [ 198 ,
 
@@ -75,11 +77,12 @@
 
           @fibonacci[ @fibonacci? - 1 ] +
           @fibonacci[ @fibonacci? - 2 ]
-   ) ]
 
-// DONE</textarea>
+   ) ] [ @fibonacci[ @fibonacci? - 1 ] , pr ]
 
-    		<p style="font-family:monospace; color: #BD00AD;"><b>Marker</b>: <a style="color:#6200A8; text-decoration:none;" href="http://github.com/arendelle/marker.js">GitHub</a> &middot; <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org">Arendelle Project</a> &middot;  <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org/legal/marker-js/">Legal</a><br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>.</p>
+// done</textarea>
+
+    		<p style="font-family:monospace; color: #BD00AD;"><b>Marker</b>: <a style="color:#6200A8; text-decoration:none;" href="http://github.com/arendelle/marker.js">GitHub</a> &middot; <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org">Arendelle Project</a> &middot;  <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org/legal/marker-js/">Legal</a><br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>, All rights reserved.</p>
 		</div>
 	</div>
 

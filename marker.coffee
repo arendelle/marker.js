@@ -1,40 +1,12 @@
-
-#
-# Port of Marker.js to CoffeeScript
-#
-
-#
-# Marker.js, Port of the original Cliff.Highlights
-# Copyright 2015 Pouya Kary <k@arendelle.org> 
-#
-
+###
+Marker.js: Port of the original Cliff.Highlights
+Copyright 2015 Pouya Kary. <k@arendelle.org>
+###
 
 #
 # INFO
 #
-
-version = '1.06'
-
-
-#
-# TAGS
-#
-
-start = '<span style="color: #'
-middle = ';">'
-end = '</span>'
-
-
-#
-# COLORS
-#
-
-loop_color = 'D60073'
-data_color = '4E00FC'
-comment_color = 'A0A0A0'
-string_color = 'BD00AD'
-number_color = '6200A8'
-function_color = '8C007F'
+marker_version = '1.08'
 
 
 #
@@ -42,33 +14,55 @@ function_color = '8C007F'
 #
 
 markerInitHighlightingOnLoad = ->
-  highlight_elements = document.getElementsByClassName('arendelle')
+  elements = document.getElementsByClassName('arendelle')
   i = 0
-  while i < highlight_elements.length
-    highlight_elements[i].innerHTML = highlight(highlight_elements[i].innerHTML)
-    ++i
+  while i < elements.length
+    elements[i].innerHTML = highlight(elements[i].innerHTML)
+    i++
   return
-
 
 #
 # Returns highlighted 'text' value
 #
 
 highlight = (text) ->
-  text = text.replace('&lt;', '<').replace('&gt;', '>')
+
+  #
+  # COLORS
+  #
+  
+  loop_color = 'D60073'
+  data_color = '4E00FC'
+  comment_color = 'A0A0A0'
+  string_color = 'BD00AD'
+  number_color = '6200A8'
+  function_color = '8C007F'
+  
+  #
+  # TAGS
+  #
+  
+  start = '<span style="color: #'
+  middle = ';">'
+  end = '</span>'
   result = ''
+  text = text.replace('&lt;', '<').replace('&gt;', '>')
+  
+  #
+  # BODY
+  #
+  
   i = 0
   while i < text.length
     reading_char = text[i]
     switch reading_char
-      
+    
       #
       # GRAMMARS
       #
       
       when '[', ']', ')', '{', '}', ';', ','
         result += start + loop_color + middle + reading_char + end
-        
         
       #
       # SPECIAL CHARACTERS
@@ -78,7 +72,6 @@ highlight = (text) ->
         result += start + loop_color + middle + '&lt;' + end
       when '>'
         result += start + loop_color + middle + '&gt;' + end
-        
         
       #
       # ( space name highlighter , 0 )
@@ -90,15 +83,17 @@ highlight = (text) ->
         while_control_6 = true
         i++
         while i < text.length and while_control_6
-          if /[a-z0-9 ]/i.test(text[i])
+          if /[\.a-z0-9 ]/i.test(text[i])
             space_init_string += text[i]
           else
-            result += start + data_color + middle + space_init_string + end
             while_control_6 = false
             i--
           i++
+        if /^ *[a-z][\.a-z0-9 ]*$/i.test(space_init_string)
+          result += start + data_color + middle + space_init_string + end
+        else
+          result += highlight(space_init_string)
         i--
-        
         
       #
       # NUMERICS
@@ -110,7 +105,7 @@ highlight = (text) ->
         number_string += reading_char
         i++
         while i < text.length and while_control_1
-          if /[0-9\.]/g.test(text[i])
+          if /[0-9\.]/.test(text[i])
             number_string += text[i]
           else
             while_control_1 = false
@@ -118,7 +113,6 @@ highlight = (text) ->
             break
           i++
         result += start + number_color + middle + number_string + end
-        
         
       #
       # { SPACE, SOURCE, STORED SPACE, FUNCTIONS 
@@ -130,7 +124,7 @@ highlight = (text) ->
         data_string += reading_char
         i++
         while i < text.length and while_control_2
-          if /[a-zA-Z0-9\?\. ]/g.test(text[i])
+          if /[a-z0-9\?\. ]/i.test(text[i])
             data_string += text[i]
           else
             while_control_2 = false
@@ -138,7 +132,6 @@ highlight = (text) ->
             break
           i++
         result += start + data_color + middle + data_string + end
-        
         
       #
       # COMMENTS
@@ -148,22 +141,22 @@ highlight = (text) ->
         comment_string = ''
         if i < text.length - 1
           i++
-          if `text[i] == '/'`
+          if text[i] == '/'
             comment_string = '//'
             i++
-            while i < text.length and `text[i] != '\n'`
+            while i < text.length and text[i] != '\n'
               comment_string += text[i]
               i++
             result += start + comment_color + middle + comment_string + end
             i--
-          else if `text[i] == '*'`
+          else if text[i] == '*'
             i++
             comment_string = '/*'
             while_control_5 = true
             while i < text.length and while_control_5
-              if `text[i] == '*'` and i < text.length - 1
+              if text[i] == '*' and i < text.length - 1
                 i++
-                if `text[i] == '/'`
+                if text[i] == '/'
                   comment_string += '*/'
                   while_control_5 = false
                 else
@@ -177,7 +170,6 @@ highlight = (text) ->
             result += '/' + text[i]
         else
           result += '/'
-          
           
       #
       # STRINGS
@@ -209,8 +201,8 @@ highlight = (text) ->
             when '\\'
               i++
               switch text[i]
-                
-                
+              
+              
                 #
                 # STRING REPLACER READER
                 #
@@ -221,10 +213,10 @@ highlight = (text) ->
                   indent_level = 0
                   while i < text.length and while_control_4
                     i++
-                    if `text[i] == '('`
+                    if text[i] == '('
                       indent_level++
-                    else if `text[i] == ')'`
-                      if `indent_level == 0`
+                    else if text[i] == ')'
+                      if indent_level == 0
                         while_control_4 = false
                         i++
                         string_string += end + '\\(' + highlight(string_replacer_string) + ')' + start + string_color + middle
@@ -246,20 +238,18 @@ highlight = (text) ->
             #
             # DONE: SCAPE SEQUANCE READER
             #
-            
             else
               string_string += text[i]
           i++
           
-           #
-           # DONE: STRING READER
-           #
+      #
+      # DONE: STRING READER
+      #
       
       
       #
       # WHITESPACE HANDLERS
       #
-      
       when '\n'
         result += '<br>'
       when ' '
@@ -269,9 +259,4 @@ highlight = (text) ->
       else
         result += reading_char
     i++
-
   result
-  
-  #
-  # DONE
-  # 
