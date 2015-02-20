@@ -1,20 +1,23 @@
 
-/* ------------------------------------------------ *
- * Marker.js: Port of the original Cliff.Highlights *
- *   Copyright 2015 Pouya Kary. <k@arendelle.org>   *
- * ------------------------------------------------ */
+
+/* -------------------------------------------------------- *
+ * ::: Marker.js: Port of the original Cliff.Highlights ::: *
+ * ::: (c) Copyright 2015 Pouya Kary. <k@arendelle.org> ::: *
+ * -------------------------------------------------------- */
 
 
-///
-/// INFO
-///
 
-var marker_version = '1.08';
+/* -------------------------------------------------------- *
+ * ::::::::::::::::::::::: I N F O :::::::::::::::::::::::: *
+ * -------------------------------------------------------- */
+
+var marker_version = '1.10';
 
 
-///
-/// markerInitHighlightingOnLoad
-///
+
+/* -------------------------------------------------------- *
+ * ::::::::::::: markerInitHighlightingOnLoad ::::::::::::: *
+ * -------------------------------------------------------- */
 
 function markerInitHighlightingOnLoad () {
 
@@ -28,9 +31,10 @@ function markerInitHighlightingOnLoad () {
 }
 
 
-///
-/// Returns highlighted 'text' value
-///
+
+/* -------------------------------------------------------- *
+ * :::::::::::::::::::::: highlight ::::::::::::::::::::::: *
+ * -------------------------------------------------------- */
 
 function highlight (text) {
 
@@ -82,7 +86,6 @@ function highlight (text) {
 			case '{':
 			case '}':
 			case ';':
-			case ',':
 
 				result += start + loop_color + middle + reading_char + end;
 				break;
@@ -110,6 +113,7 @@ function highlight (text) {
 			//
 
 			case '(':
+			case ',':
 
 				result += start + loop_color + middle + reading_char + end;
 
@@ -136,11 +140,39 @@ function highlight (text) {
 
 				if ( /^ *[a-z][\.a-z0-9 ]*$/i.test(space_init_string) ) {
 
-					result += start + data_color + middle + space_init_string + end;
+					console.log(text[i] );
+
+					//
+					// Is it function comment? !func ( comment: @space )
+					//
+
+					if ( text[i] == ':' ) {
+
+						result += start + comment_color + middle + space_init_string + ':' + end;
+						i++;
+
+					//
+					// If it is not is it a space init ( space , 10 )
+					//
+
+					} else if ( reading_char == "(" ) {
+
+						result += start + data_color + middle + space_init_string + end;
+
+					//
+					// Aww! it's nothing!
+					//
+
+					} else {
+
+						result += highlight (space_init_string);
+
+					}
 
 				} else {
 
 					result += highlight (space_init_string);
+
 				}
 				
 				i--;
@@ -430,6 +462,8 @@ function highlight (text) {
 	return result ;
 }
 
-///
-/// DONE
-///
+/* -------------------------------------------------------- *
+ * ::::::::::::::::::::::: D O N E :::::::::::::::::::::::: *
+ * -------------------------------------------------------- */
+
+

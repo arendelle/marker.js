@@ -42,12 +42,18 @@
  			var resultCode = mark($("#pad").val());
 			document.getElementById("preView").innerHTML = resultCode;
 			document.getElementById("codeView").innerHTML = resultCode.replace(/\</g,'&lt;').replace(/\>/g,'&gt;');
+			size();
 		}
 
 		function mark (text) {
 			var start_header = '<!-- [+] Marker.js ' + marker_version + ' : Code Block -->\n\n<pre><code>';
 			var end_header   = '</code></pre>\n\n<!-- [-] Marker.js ' + marker_version + ' : Code Block -->';
 			return start_header + highlight ( text ) + end_header ;
+		}
+
+		function size () {
+
+			document.getElementById("body").offsetHeight = document.getElementById("body").offsetHeight - 400;
 		}
  	</script>
 </head>
@@ -58,10 +64,10 @@
 	<div style="float:left; width:35%; background-color: #fff; height:95vh;">
 		<div style="margin: 2%; height:98%; border: 1px solid #ccc; border-top: none; border-bottom: none; border-left: none;">
 
-			<img src="logo.png" style="height:40px;">
+			<img src="logo.png" style="height:24px;"><br>&nbsp;<br>
 
 			<!-- Input -->
-			<textarea id="pad" style="width:96%; height:87%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #BD00AD; outline: none;  outline-color: transparent; outline-style: none;">/* Marker Studio is an online playground for *
+			<textarea id="pad" style="width:96%; height:84%; resize: none; border: none; font-family:Menlo; font-size:0.75rem; background-color: #fff; color: #BD00AD; outline: none;  outline-color: transparent; outline-style: none;">/* Marker Studio is an online playground for *
  * Arendelle's marker.js. So you can see how *
  * the engine works and what code it creates */
 
@@ -82,6 +88,7 @@
 
 // done</textarea>
 
+
     		<p style="font-family:monospace; color: #BD00AD;"><b>Marker</b>: <a style="color:#6200A8; text-decoration:none;" href="http://github.com/arendelle/marker.js">GitHub</a> &middot; <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org">Arendelle Project</a> &middot;  <a style="color:#6200A8; text-decoration:none;" href="http://web.arendelle.org/legal/marker-js/">Legal</a><br>Copyright 2015 <a href="http://kary.us/" style="color:#6200A8; text-decoration:none;">Pouya Kary</a>, All rights reserved.</p>
 		</div>
 	</div>
@@ -101,6 +108,8 @@
 		</div>		
 
 	</div>
+
+	<div style="background-color: #eee; clear: both"></div>
 
 	<!-- Engine -->
 	<script>$("textarea").bind('input propertychange', function(){
