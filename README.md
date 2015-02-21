@@ -20,7 +20,7 @@ We ask you to use `marker.js` from our website because this way we can keep the 
 And then what ever you want to highlight use class `arendelle` for and they will be simply highlighted:
 
 ```HTML
-<pre><code class="arendelle">[ 10 , pr ]</code></pre>
+<pre class="arendelle">[ 10 , pr ]</pre>
 ```
 
 This system is designed to be very much like [highlight.js](https://highlightjs.org) 

@@ -42,12 +42,13 @@ function highlight (text) {
 	// COLORS
 	//
 
-	var loop_color     = "D60073";
-	var data_color     = "4E00FC";
-	var comment_color  = "A0A0A0";
-	var string_color   = "BD00AD"; 
-	var number_color   = "6200A8";
-	var function_color = "8C007F";
+	var grammar_color      = "D60073"; // D60073
+	var comment_color      = "A0A0A0"; // A0A0A0
+	var func_comment_color = "8C007F"; // 8C007F
+	var data_color         = "4E00FC"; // 4E00FC
+	var string_color   	   = "BD00AD"; // BD00AD
+	var number_color   	   = "6200A8"; // 6200A8
+
 
 
 
@@ -87,7 +88,7 @@ function highlight (text) {
 			case '}':
 			case ';':
 
-				result += start + loop_color + middle + reading_char + end;
+				result += start + grammar_color + middle + reading_char + end;
 				break;
 
 
@@ -98,11 +99,11 @@ function highlight (text) {
 			//
 
 			case '<':
-				result += start + loop_color + middle + "&lt;" + end;
+				result += start + grammar_color + middle + "&lt;" + end;
 				break;
 
 			case '>':
-				result += start + loop_color + middle + "&gt;" + end;
+				result += start + grammar_color + middle + "&gt;" + end;
 				break;
 
 
@@ -115,7 +116,7 @@ function highlight (text) {
 			case '(':
 			case ',':
 
-				result += start + loop_color + middle + reading_char + end;
+				result += start + grammar_color + middle + reading_char + end;
 
 				var space_init_string = '';
 				var while_control_6   = true;
@@ -148,7 +149,7 @@ function highlight (text) {
 
 					if ( text[i] == ':' ) {
 
-						result += start + comment_color + middle + space_init_string + ':' + end;
+						result += start + func_comment_color + middle + space_init_string + ':' + end;
 						i++;
 
 					//
@@ -256,7 +257,8 @@ function highlight (text) {
 					i++;
 				}
 
-				result += start + data_color + middle + data_string + end;
+				result += start + data_color + middle + data_string + end; 
+
 				break;
 
 
