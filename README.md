@@ -32,12 +32,22 @@ This system is designed to be very much like [highlight.js](https://highlightjs.
 If you want to highlight yourself you can use `highlight( code )` function. You can use this codes like this:
 
 ```JavaScript
-document.getElementById( "something" ).innerHTML = highlight ( document.getElementById("something").innerHTML )
+document.getElementById( "something" ).innerHTML = markerHighlight ( document.getElementById("something").innerHTML )
 ```
 
 Done! You've mastered it all!
 
 <br><br>
+
+## Annotated Code
+
+Marker.js is a literate program. The codes are commented with Markdown supporting [Docco]((http://jashkenas.github.com/docco/)). You can convert it to an annotated documentation using:
+
+```
+% docco marker.js
+```
+
+A read Annotated Documentation can be found in [Pouya Kary's Website](http://kary.us/codes/marker/)
 
 ## License
 
