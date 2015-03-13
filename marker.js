@@ -19,7 +19,7 @@
 // <pre class="arendelle">[ 10 , pr ]</pre>
 // ```
 
-var marker_version = '1.12';
+var marker_version = '1.14';
 
 //<br><br>
 //## marker Init Highlighting On Load
@@ -411,63 +411,45 @@ function markerHighlight (text) {
 							while_control_3 = false; i--;
 							break;
 
-						// Other thing is to take care of scape sequences. Because Arendelle uses 
-						// [Swift like String Interpolation](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html)
-						// the interpolation starts with a back slash as well therefore we can take care of all here.
+						// First implementations of Arendelle used [Swift like String Interpolation](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html)
+						// but since Arendelle Infrastructure Specification 2XII a new grammar replaced it
+						// which offered a much more readability to the language and it used "|" for starting
+						// and finishing so an Arendelle string interpolation can be like "| ... |" This is how we read
+						// it and highlight it recursively  
 
-						case '\\':
-							i++;
+						case '|':
 
-							switch (text[ i ]) {
-
-								// Is it interpolation? if it is we have to do this: We read it then we highlight inside
-								// of it using a recursive use of the `markerHighlight` function itself like what we did before.
-
-								case '(':
-
-									var while_control_4        = true;
-									var string_replacer_string = '';
-									var indent_level		   = 0;
-
+							var while_control_4        = true;
+							var string_replacer_string = '';
 									
-									while ( i < text.length && while_control_4 ) {
+							while ( i < text.length && while_control_4 ) {
 
-										i++;
+								i++;
 
-										if ( text[ i ] === '(' ) {
+								if ( text[ i ] === '|' ) {
 
-											indent_level++;
+									while_control_4 = false; i++;
+									string_string += end + "|" + markerHighlight ( string_replacer_string ) + "|" + start + string_color + middle;
 
-										} else if ( text[ i ] === ')' ) {
+								} else {
 
-											if ( indent_level === 0 ) {
+									string_replacer_string += text[ i ];
 
-												while_control_4 = false; i++;
-												string_string += end + "\\(" + markerHighlight ( string_replacer_string ) + ")" + start + string_color + middle;
-
-											}
-
-											indent_level--;
-
-										} else {
-
-											string_replacer_string += text[ i ];
-
-										}
-									}
-
-									break;
-
-								// Or if it's not a string interpolation it's a **Scape Sequence**, All we
-								// have to do is to highlight it.
-
-								default:
-									string_string += start + data_color + middle + '\\' + text[ i ] + end;
-									i++;
-
+								}
 							}
 
 							i--;
+
+							break;
+
+						// The other thing about strings are their scape sequences:
+
+						case '\\':
+
+							i++;
+
+							string_string += start + data_color + middle + '\\' + text[ i ] + end;
+
 							break;
 
 						// So if it's not the end of the string, also not a scape 
