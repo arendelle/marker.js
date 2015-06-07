@@ -19,7 +19,7 @@
 // <pre class="arendelle">[ 10 , pr ]</pre>
 // ```
 
-var marker_version = '1.14';
+var marker_version = '1.16';
 
 //<br><br>
 //## marker Init Highlighting On Load
@@ -48,7 +48,7 @@ function markerHighlight (text) {
 
 	var grammar_color		= "D60073";
 	var comment_color 		= "A0A0A0";
-	var func_comment_color		= "8C007F";
+	var func_comment_color	= "8C007F";
 	var data_color			= "4E00FC";
 	var string_color		= "BD00AD";
 	var number_color		= "6200A8";
@@ -89,7 +89,7 @@ function markerHighlight (text) {
 			// Grammars in Arendelle things starting with something, divided by a ','
 			// and then ending with something else like: `( part1, part2, part3 )` All
 			// we have to do here is to highlight their grammar parts: `(`, `,` , `)`
-
+			
 			case '[':
 			case ']':
 			case ')':
@@ -294,11 +294,14 @@ function markerHighlight (text) {
 
 			// ### Comments
 
-			// Arendelle supports 3 commenting system: **Slash-Star**, **Slash-Slash**, **Function-Comment**.
+			// Arendelle supports 5 commenting system: Arendelle's comments, C Style Comments and **Function-Comment**.
 			// We took care of Function-Comments in the "[Special Situation](#section-16)" that's why our job
-			// is easier here. We only have to take care about C style comments: `/* comment */` and `// comment`
+			// is easier here. And we'll define the same method we used here for the Arendelle 2XII Style comments
+			// so now we only have to take care about C style comments: `/* comment */` and `// comment`
 			// <br><br>Now the thing that makes it too easy is they both start with `/` and thanks to that we don't
 			// need to change any architecture, char-by-char still works
+
+			// #### C Style Commments
 
 			case '/':
 
@@ -376,8 +379,100 @@ function markerHighlight (text) {
 
 				break;
 
+			
+			
+			
+			// #### Arendelle 2XII Style Comments
+			
+			// These comments are so much like the comments of C, we have one `-- comment` that is
+			// just like the main `// comment` in c and aslo a `*- comment =*` which is like the
+			// `/* comment */`. Implementing these comments are easy. Just like the C Style
+
+			// #### Arendelle multi-line comment
+
+			case '*':
+			
+				var comment_string2 = '';
+				
+				if ( i < text.length - 1 ) {
+
+					i++;
+
+					if ( text[ i ] === '-' ) {
+
+						i++; comment_string2  = '*-'; 
+						var  while_control_12 = true;
+
+						while ( i < text.length && while_control_12 ) {
+
+							if ( text[ i ] === '-' && i < text.length -1 ) {
+
+								i++;
+								if ( text[ i ] === '*' ) {
+
+									comment_string2 += '-*';
+									while_control_12 = false;
+
+								} else {
+									comment_string2 += '-' + text[i];
+									i++;
+								}						
+
+							} else {
+								comment_string2 += text[ i ];
+								i++;
+							}
+						}
+
+						result += start + comment_color + middle + comment_string2 + end;
+					} else {
+						result += '*' + text[ i ];
+					}
+
+				} else {
+					result += '*';
+				}
+
+				break;
 
 
+
+			// #### Arendelle single line commetn
+
+			case '-':
+
+				var comment_string3 = '';
+				
+				if ( i < text.length - 1 ) {
+
+					i++;
+
+					if ( text[ i ] === '-' ) {
+
+						comment_string3 = '--'; i++;
+
+						while ( i < text.length && text[ i ] !== '\n' ) {
+
+							comment_string3 += text[ i ];
+							i++;
+
+						}
+
+						result += start + comment_color + middle + comment_string3 + end;
+						i--;
+					
+					} else {
+						result += '-';	
+					}
+
+				} else {
+					result += '-';
+				}
+
+				break;
+				
+				
+				
 
 			// ### Strings
 
