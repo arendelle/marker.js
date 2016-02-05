@@ -47,13 +47,14 @@ Marker.js is a literate program. The codes are commented with Markdown supportin
 % docco marker.js
 ```
 
-A read Annotated Documentation can be found in [Arendelle Documentations](https://arendelle.org/docs/libraries/filesystem/index.html)
+A read Annotated Documentation can be found in [Kary Foundation's Developer  Documentations](https://www.karyfoundation.org/developer/arendelle/libraries/marker/)
 
 ## License
 
 ```
 Marker.js - Library for highlighting Arendelle Code
-Copyright (c) 2015 Pouya Kary <k@arendelle.org>
+   Copyright (c) 2015 Kary Foundation, Inc.
+   Author: Pouya Kary <k@arendelle.org>
 
 
 This program is free software: you can redistribute it and/or modify
